@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>AutoShop Modern - POMAN STORE</title>
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Poppins modern -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #0a0f1e 0%, #0c1222 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+            position: relative;
+        }
+
+        /* Background custom image via pseudo-element (modern blend) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://files.catbox.moe/jj3jez.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.2;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(18, 25, 45, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1);
+            overflow: hidden;
+            padding: 1.8rem;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        /* header & name section */
+        .name-section {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 1.5rem;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            border: 1px solid rgba(255,215,0,0.3);
+        }
+
+        .name-input-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 2;
+            flex-wrap: wrap;
+        }
+
+        .name-input-area label {
+            font-weight: 600;
+            color: #ffd966;
+            text-shadow: 0 0 4px rgba(0,0,0,0.5);
+            font-size: 1.1rem;
+        }
+
+        #customerName {
+            background: #0f1422;
+            border: 1px solid #2a3a6e;
+            padding: 0.8rem 1.2rem;
+            border-radius: 2rem;
+            color: white;
+            font-weight: 500;
+            width: 250px;
+            transition: 0.2s;
+            outline: none;
+        }
+
+        #customerName:focus {
+            border-color: #ffb347;
+            box-shadow: 0 0 8px rgba(255,180,70,0.5);
+        }
+
+        .greeting {
+            font-size: 0.9rem;
+            background: #1e2a3e;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            color: #bbd9ff;
+        }
+
+        /* produk grid modern */
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 1.5rem 0 1rem 0;
+            color: #ffeaac;
+            border-left: 5px solid #ffb347;
+            padding-left: 1rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            background: rgba(10, 16, 30, 0.8);
+            backdrop-filter: blur(4px);
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            border: 1px solid rgba(255, 200, 100, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffb347;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #FFD966;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .product-badge {
+            background: #ff9800;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            color: #1e1e2a;
+            font-weight: bold;
+        }
+
+        .product-desc {
+            font-size: 0.85rem;
+            color: #b9c7d9;
+            margin: 8px 0;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffc107;
+            margin: 10px 0;
+        }
+
+        .qty-selector {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #00000055;
+            border-radius: 3rem;
+            padding: 0.3rem 0.8rem;
+            margin-top: 0.8rem;
+        }
+
+        .qty-btn {
+            background: #2c3e66;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .qty-btn:active {
+            transform: scale(0.95);
+        }
+
+        .qty-number {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .order-summary {
+            background: #0b1120cc;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            margin: 1rem 0;
+            border: 1px solid #ffb34755;
+        }
+
+        .cart-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 0.5rem 0;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            background: #00000033;
+            padding: 0.5rem;
+            border-radius: 1rem;
+            margin: 0.3rem 0;
+            font-size: 0.85rem;
+        }
+
+        .total-price {
+            font-size: 1.4rem;
+            font-weight: 800;
+            text-align: right;
+            color: #ffd966;
+            margin-top: 0.5rem;
+        }
+
+        .btn-order {
+            background: linear-gradient(95deg, #ff9800, #ff5722);
+            border: none;
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 3rem;
+            color: white;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-order:hover {
+            transform: scale(0.98);
+            background: linear-gradient(95deg, #ff8800, #ff451a);
+        }
+
+        /* modal payment */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #111827;
+            max-width: 500px;
+            width: 90%;
+            border-radius: 2rem;
+            padding: 1.8rem;
+            border: 1px solid #ffb347;
+            box-shadow: 0 20px 35px black;
+            animation: fadeUp 0.2s ease;
+        }
+
+        @keyframes fadeUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            background: #0f172a;
+            padding: 1rem;
+            border-radius: 1.2rem;
+        }
+
+        .payment-item {
+            background: #1e293b;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qris-img {
+            width: 60px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-wa {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 2rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+            width: 100%;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .btn-wa:hover {
+            background: #128C7E;
+        }
+
+        .close-modal {
+            background: #334155;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            color: white;
+            float: right;
+            cursor: pointer;
+        }
+
+        .alert-name {
+            color: #ffaa66;
+            font-size: 0.8rem;
+            margin-top: 0.2rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.7rem;
+            color: #aab3c9;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="name-section">
+        <div class="name-input-area">
+            <label><i class="fas fa-user-astronaut"></i> Nama Kamu:</label>
+            <input type="text" id="customerName" placeholder="Contoh: Andi / Putri" autocomplete="off">
+            <div class="greeting"><i class="fas fa-store"></i> POMAN STORE</div>
+        </div>
+        <div id="nameWarning" class="alert-name"></div>
+    </div>
+
+    <div class="section-title"><i class="fas fa-crown"></i> Pilih Produk (bisa lebih dari 1)</div>
+    <div class="products-grid" id="productsGrid"></div>
+
+    <!-- Ringkasan Pesanan -->
+    <div class="order-summary">
+        <h3 style="color:#ffd966;"><i class="fas fa-shopping-cart"></i> Pesanan Anda</h3>
+        <div id="cartItemsList" class="cart-list">Belum ada produk dipilih.</div>
+        <div class="total-price" id="totalPriceDisplay">Total: Rp 0</div>
+    </div>
+
+    <button class="btn-order" id="orderNowBtn"><i class="fas fa-receipt"></i> BUAT PESANAN</button>
+    <footer>Pilih produk, atur jumlah, lalu klik Buat Pesanan</footer>
+</div>
+
+<!-- Modal Payment -->
+<div id="paymentModal" class="modal">
+    <div class="modal-content">
+        <button class="close-modal" id="closeModalBtn"><i class="fas fa-times"></i> Tutup</button>
+        <h2 style="color:#ffd966; margin-top: 0;"><i class="fas fa-credit-card"></i> Metode Pembayaran</h2>
+        <div class="payment-methods">
+            <div class="payment-item"><i class="fas fa-phone-alt"></i> <strong>DANA:</strong> 085828481568</div>
+            <div class="payment-item"><i class="fab fa-google-pay"></i> <strong>GOPAY:</strong> 081220568534</div>
+            <div class="payment-item"><strong>QRIS:</strong> <img src="https://files.catbox.moe/9l043y.png" class="qris-img" alt="QRIS" onclick="window.open('https://files.catbox.moe/9l043y.png')"> (klik gambar)</div>
+        </div>
+        <p style="margin: 1rem 0; text-align:center; color:#ccc;"><i class="fas fa-info-circle"></i> Setelah transfer, kirim bukti ke WhatsApp</p>
+        <button id="kirimBuktiWaBtn" class="btn-wa"><i class="fab fa-whatsapp"></i> KIRIM BUKTI TF</button>
+    </div>
+</div>
+
+<script>
+    // Data produk sesuai list (JASTEB UNCHEK)
+    const productsData = [
+        { id: 1, name: "50 AKUN GG", price: 10000, type: "JASTEB UNCHEK", badge: "RESS 50" },
+        { id: 2, name: "100 AKUN GG", price: 15000, type: "JASTEB UNCHEK", badge: "VIP" },
+        { id: 3, name: "150 AKUN GG", price: 20000, type: "JASTEB UNCHEK", badge: "VIP" },
+        { id: 4, name: "200 AKUN GG", price: 25000, type: "JASTEB UNCHEK", badge: "PREMIUM" },
+        { id: 5, name: "250 AKUN GG", price: 30000, type: "JASTEB UNCHEK", badge: "PREMIUM" },
+        { id: 6, name: "300 AKUN GG", price: 35000, type: "JASTEB UNCHEK", badge: "PREMIUM" },
+        { id: 7, name: "350 AKUN GG", price: 50000, type: "JASTEB UNCHEK", badge: "PREMIUM" }
+    ];
+
+    // Keranjang: { id, name, price, quantity }
+    let cart = [];
+
+    // Render produk ke grid
+    function renderProducts() {
+        const grid = document.getElementById('productsGrid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        productsData.forEach(prod => {
+            // cari item di cart untuk ambil quantity awal
+            const cartItem = cart.find(c => c.id === prod.id);
+            const qty = cartItem ? cartItem.quantity : 0;
+
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <div class="product-title">
+                    ${prod.name}
+                    <span class="product-badge">${prod.badge}</span>
+                </div>
+                <div class="product-desc">📦 ${prod.type}</div>
+                <div class="product-price">Rp ${prod.price.toLocaleString('id-ID')}</div>
+                <div class="qty-selector">
+                    <button class="qty-btn minus" data-id="${prod.id}">-</button>
+                    <span class="qty-number" id="qty-${prod.id}">${qty}</span>
+                    <button class="qty-btn plus" data-id="${prod.id}">+</button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // attach event listeners untuk tombol +/-
+        document.querySelectorAll('.minus').forEach(btn => {
+            btn.removeEventListener('click', handleMinus);
+            btn.addEventListener('click', handleMinus);
+        });
+        document.querySelectorAll('.plus').forEach(btn => {
+            btn.removeEventListener('click', handlePlus);
+            btn.addEventListener('click', handlePlus);
+        });
+    }
+
+    function handleMinus(e) {
+        const id = parseInt(e.currentTarget.getAttribute('data-id'));
+        updateQuantity(id, -1);
+    }
+    function handlePlus(e) {
+        const id = parseInt(e.currentTarget.getAttribute('data-id'));
+        updateQuantity(id, 1);
+    }
+
+    function updateQuantity(productId, delta) {
+        const product = productsData.find(p => p.id === productId);
+        if (!product) return;
+        const existingIndex = cart.findIndex(c => c.id === productId);
+        if (existingIndex !== -1) {
+            const newQty = cart[existingIndex].quantity + delta;
+            if (newQty <= 0) {
+                cart.splice(existingIndex, 1);
+            } else {
+                cart[existingIndex].quantity = newQty;
+            }
+        } else {
+            if (delta > 0) {
+                cart.push({ id: product.id, name: product.name, price: product.price, quantity: 1 });
+            }
+        }
+        // update tampilan qty di card dan cart summary
+        updateCartUI();
+        renderProducts();   // re-render untuk update angka di setiap card (tetap mempertahankan cart)
+    }
+
+    function updateCartUI() {
+        const cartContainer = document.getElementById('cartItemsList');
+        const totalSpan = document.getElementById('totalPriceDisplay');
+        let total = 0;
+        if (cart.length === 0) {
+            cartContainer.innerHTML = 'Belum ada produk dipilih.';
+            totalSpan.innerText = 'Total: Rp 0';
+            return;
+        }
+        let html = '';
+        cart.forEach(item => {
+            const subtotal = item.price * item.quantity;
+            total += subtotal;
+            html += `<div class="cart-item">
+                        <span><strong>${item.name}</strong> x ${item.quantity}</span>
+                        <span>Rp ${subtotal.toLocaleString('id-ID')}</span>
+                     </div>`;
+        });
+        cartContainer.innerHTML = html;
+        totalSpan.innerText = `Total: Rp ${total.toLocaleString('id-ID')}`;
+    }
+
+    // Fungsi untuk membuat teks WhatsApp otomatis sesuai format
+    function generateWhatsAppMessage(customerName, cartItems, totalHarga) {
+        // Ambil tanggal & jam otomatis
+        const now = new Date();
+        const tanggal = now.toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
+        const jam = now.toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+        const tanggalJam = `${tanggal} / ${jam}`;
+
+        // buat list produk dari cart sesuai format: NAMA PRODUK & HARGA per item? sesuai permintaan contoh:
+        // LIST PRODUK: JASTEB UNCHEK
+        // JUMLAH RESS & HARGA
+        // 50 AKUN GG Rp 10.000 VIP ...
+        let listProdukString = "";
+        cartItems.forEach(item => {
+            const productInfo = productsData.find(p => p.id === item.id);
+            const badge = productInfo ? productInfo.badge : "";
+            listProdukString += `${item.name}\nRp ${item.price.toLocaleString('id-ID')} ${badge}\n`;
+        });
+
+        // jumlah ress total (total quantity)
+        const totalRess = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+        
+        // format akhir sesuai permintaan:
+        const message = `*HALO BANG POMAN*\n*TOLONG KONFIRMASI PEMBELIAN SAYA*\n\nHARGA: Rp ${totalHarga.toLocaleString('id-ID')}\nJUMLAH RESS: ${totalRess}\nTANGGAL/BULAN/JAM: ${tanggalJam}\n\nTOLONG KONFIRMASI PEMBELIAN SAYA BANG POMAN.\n\nLIST PRODUK:\nJASTEB UNCHEK\n\nJUMLAH RESS & HARGA\n${listProdukString}\n\nPAYMENT:\nDANA:085828481568\nGOPAY:081220568534\nQRIS:https://files.catbox.moe/9l043y.png`;
+        
+        return message;
+    }
+
+    // Tombol buat pesanan: validasi nama, cek cart, lalu munculin modal payment
+    document.getElementById('orderNowBtn').addEventListener('click', () => {
+        const customerNameInput = document.getElementById('customerName').value.trim();
+        if (customerNameInput === "") {
+            document.getElementById('nameWarning').innerHTML = '<i class="fas fa-exclamation-triangle"></i> Harap masukkan nama terlebih dahulu!';
+            return;
+        } else {
+            document.getElementById('nameWarning').innerHTML = '';
+        }
+        if (cart.length === 0) {
+            alert("⚠️ Belum memilih produk. Silakan pilih minimal 1 produk.");
+            return;
+        }
+        // Simpan nama ke localStorage sementara agar bisa dipake di modal WA
+        window.currentCustomerName = customerNameInput;
+        // tampilkan modal payment
+        document.getElementById('paymentModal').style.display = 'flex';
+    });
+
+    // Tombol "Kirim Bukti TF" yang akan redirect ke WA dengan pesan otomatis
+    document.getElementById('kirimBuktiWaBtn').addEventListener('click', () => {
+        const name = window.currentCustomerName || "Pelanggan";
+        if (cart.length === 0) {
+            alert("Keranjang kosong, tidak bisa melanjutkan.");
+            document.getElementById('paymentModal').style.display = 'none';
+            return;
+        }
+        // Hitung total harga dari cart
+        const totalHarga = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const waMessage = generateWhatsAppMessage(name, cart, totalHarga);
+        // encode message untuk URL WhatsApp
+        const encodedMsg = encodeURIComponent(waMessage);
+        // Nomor tujuan (isi dengan nomor tujuan BANG POMAN, disini contoh menggunakan nomor yang diberikan? tapi karena tidak disebut, kita asumsikan nomor penerima bisa diisi.
+        // Dalam skenario asli, Anda ingin mengirim ke admin / Bang Poman. Contoh menggunakan nomor 085828481568 (dana) atau bisa ubah ke nomor WhatsApp penjual. Saya akan gunakan nomor 085828481568 sebagai contoh (bisa diganti). 
+        // Tapi berdasarkan permintaan: "kirim bukti transfer ke whatsapp" dan otomatis ke whatsapp dengan teks diatas. Nomor penerima harus ditentukan. 
+        // Dari data pembayaran ada no dana 085828481568 kemungkinan itu nomor penjual. Saya set itu sebagai nomor WA penjual.
+        const merchantWhatsApp = "6285828481568"; // 085828481568 -> kode internasional
+        const waLink = `https://wa.me/${merchantWhatsApp}?text=${encodedMsg}`;
+        // Buka WhatsApp
+        window.open(waLink, '_blank');
+        // Optional: tutup modal setelah mengirim
+        // document.getElementById('paymentModal').style.display = 'none';
+        // bisa juga memberi notifikasi, namun biarkan terbuka agar user bisa screenshot bukti
+    });
+
+    // Tutup modal
+    document.getElementById('closeModalBtn').addEventListener('click', () => {
+        document.getElementById('paymentModal').style.display = 'none';
+    });
+    window.addEventListener('click', (e) => {
+        const modal = document.getElementById('paymentModal');
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Inisialisasi
+    renderProducts();
+    updateCartUI();
+</script>
+</body>
+</html>
